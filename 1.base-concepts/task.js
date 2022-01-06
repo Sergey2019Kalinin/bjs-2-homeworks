@@ -85,13 +85,19 @@ let months = function(now, date) {
   return ((d2D+12*d2M+12*12*d2Y)-(d1D+12*d1M+12*12*d1Y))/30;
 */
  
- 
+
 //вычисляем количество месяцев, на которое был выдан кредит
 let difference = (now - date)/1000/60/60/24/30;
 
 //рассчитаем платёж при процентной ставке 12% годовых
 let interestRate = 12;
-let totalAmount = s * (interestRate + (interestRate / (Math.pow((1 + interestRate), difference) - 1)));
+let payMonth = s * (interestRate + (interestRate / (Math.pow((1 + interestRate), difference) - 1)));
+
+//рассчитаем полную сумму кредита
+let totalAmount = payMonth*difference + s;
+
+//округляем до 2-х знаков после запятой
+totalAmount = +totalAmount.toFixed(2);
 
 return totalAmount;
 }
