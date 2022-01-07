@@ -1,16 +1,16 @@
-use strict
+'use strict';
 
 function solveEquation(a, b, c) {
   let arr = [];
-  let d = Math.pow(b, 2) - 4*a*c;
+  let d = Math.pow(b, 2)-4*a*c;
 
   if(d === 0) {
     let x = -b/(2*a);
     arr.push(x);
   }
-   else if(d>0) {
-      let x1 = (-b + Math.sqrt(d)) / (2*a);
-      let x2 = (-b - Math.sqrt(d)) / (2*a);
+   else if(d > 0) {
+      let x1 = (-b+Math.sqrt(d))/(2*a);
+      let x2 = (-b-Math.sqrt(d))/(2*a);
       arr.push(x1, x2);
     }
 
@@ -19,36 +19,26 @@ function solveEquation(a, b, c) {
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
 
-//поочерёдно проверяем типы вводимых данных на соответствие типу "number"
-//преобразуем в него, если это возможно
-//если невозможно, выводим сообщение в консоль
+//поочерёдно проверяем вводимые данные на соответствие типу "number"
+percent = +percent;
 if(typeof percent != "number") {
-  percent = +percent;
-  if(typeof percent != "number") {
-    console.log(`Параметр "процентная ставку" содержит неправильное значение ${percent}`)
-  } 
+  return `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
 }
 
+contribution = +contribution;
 if(typeof contribution != "number") {
-  contribution = +contribution;
-  if(typeof contribution != "number") {
-    console.log(`Параметр "сумма первоначального взноса" содержит неправильное значение ${contribution}`)
-  } 
+  return `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
 }
 
+amount = +amount;
 if(typeof amount != "number") {
-  amount = +amount;
-  if(typeof amount != "number") {
-    console.log(`Параметр "сумма кредита" содержит неправильное значение ${amount}`)
-  } 
-}
+  return `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
+} 
 
+date=+date;
 if(typeof date != "number") {
-  date=+date;
-  if(typeof date != "number") {
-    console.log(`Параметр "дата окончания кредита" содержит неправильное значение ${date}`)
-  } 
-}
+return `Параметр "дата окончания кредита" содержит неправильное значение ${date}`;
+} 
 
 //считаем тело кредита
 let s = amount - contribution;
@@ -58,15 +48,15 @@ let now = new Date();
 
 /* первое направление
 //считаем количество лет кредита
-let creditYears = getFullYear(now) - getFullYear(date);
+let creditYears = getFullYear(date) - getFullYear(now);
 
 //считаем количество месяцев кредита
 let creditMonths;
-if((getMonth(now) - getMonth(date)) < 0) {
-  creditMonths = getMonth(now) - getMonth(date) + 12;
+if((getMonth(date) - getMonth(now)) < 0) {
+  creditMonths = getMonth(date) - getMonth(now) + 12;
   creditYears--;
 } else {
-  creditMonths = getMonth(now) - getMonth(date);
+  creditMonths = getMonth(date) - getMonth(now);
   }
 
 //считаем количество дней кредита...
@@ -86,12 +76,11 @@ let months = function(now, date) {
 */
  
 
-//вычисляем количество месяцев, на которое был выдан кредит
-let difference = (now - date)/1000/60/60/24/30;
+//вычисляем количество месяцев, на которое выдаётся кредит
+let difference = (date-now)/1000/60/60/24/30.5;
 
 //рассчитаем платёж при процентной ставке 12% годовых
-let interestRate = 12;
-let payMonth = s * (interestRate + (interestRate / (Math.pow((1 + interestRate), difference) - 1)));
+let payMonth = s * (percent/12 + (percent/12/(Math.pow((1+percent/12), difference) - 1)));
 
 //рассчитаем полную сумму кредита
 let totalAmount = payMonth*difference + s;
