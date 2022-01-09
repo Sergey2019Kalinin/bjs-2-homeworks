@@ -20,17 +20,17 @@ function solveEquation(a, b, c) {
 function calculateTotalMortgage(percent, contribution, amount, date) {
 
 //поочерёдно проверяем вводимые данные на соответствие типу "number"
-if(isnan(percent)) {
+if(isNaN(percent)) {
   return `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
 }
 percent = +percent;
 
-if(isnan(contribution)) {
+if(isNaN(contribution)) {
   return `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
 }
 contribution = +contribution;
 
-if(isnan(amount)) {
+if(isNaN(amount)) {
   return `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
 }
 amount = +amount;
@@ -53,7 +53,7 @@ percent = percent/12/100;
 let payMonth = s * (percent + (percent/(Math.pow((1+percent), difference) - 1)));
 
 //рассчитаем полную сумму кредита
-let totalAmount = payMonth*difference + s;
+let totalAmount = payMonth*difference;
 
 //округляем до 2-х знаков после запятой
 totalAmount = +totalAmount.toFixed(2);
