@@ -20,67 +20,37 @@ function solveEquation(a, b, c) {
 function calculateTotalMortgage(percent, contribution, amount, date) {
 
 //поочерёдно проверяем вводимые данные на соответствие типу "number"
-percent = +percent;
-if(typeof percent != "number") {
+if(isnan(percent)) {
   return `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
 }
+percent = +percent;
 
-contribution = +contribution;
-if(typeof contribution != "number") {
+if(isnan(contribution)) {
   return `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
 }
+contribution = +contribution;
 
-amount = +amount;
-if(typeof amount != "number") {
+if(isnan(amount)) {
   return `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
-} 
-
-date=+date;
-if(typeof date != "number") {
-return `Параметр "дата окончания кредита" содержит неправильное значение ${date}`;
-} 
-
-//считаем тело кредита
-let s = amount - contribution;
+}
+amount = +amount;
 
 //получаем дату настоящего момента
 let now = new Date();
 
-/* первое направление
-//считаем количество лет кредита
-let creditYears = getFullYear(date) - getFullYear(now);
+if((date-now)<=0) {
+  return `Параметр "Дата окончания кредита" содержит неправильное значение "${date}"`;
+}
 
-//считаем количество месяцев кредита
-let creditMonths;
-if((getMonth(date) - getMonth(now)) < 0) {
-  creditMonths = getMonth(date) - getMonth(now) + 12;
-  creditYears--;
-} else {
-  creditMonths = getMonth(date) - getMonth(now);
-  }
-
-//считаем количество дней кредита...
-*/
-
-/* вторая попытка
-//считаем количество месяцев кредита
-let months = function(now, date) {
-  let d1Y = now.getFullYear();
-  let d2Y = date.getFullYear();
-  let d1M = now.getMonth();
-  let d2M = date.getMonth();
-  let d1D = now.getDate();
-  let d2D = date.getDate();
-
-  return ((d2D+12*d2M+12*12*d2Y)-(d1D+12*d1M+12*12*d1Y))/30;
-*/
- 
+//считаем тело кредита
+let s = amount - contribution;
 
 //вычисляем количество месяцев, на которое выдаётся кредит
-let difference = (date-now)/1000/60/60/24/30.5;
+let difference = Math.ceil((date-now)/1000/60/60/24/30.5)
 
 //рассчитаем платёж при процентной ставке 12% годовых
-let payMonth = s * (percent/12 + (percent/12/(Math.pow((1+percent/12), difference) - 1)));
+percent = percent/12/100;
+let payMonth = s * (percent + (percent/(Math.pow((1+percent), difference) - 1)));
 
 //рассчитаем полную сумму кредита
 let totalAmount = payMonth*difference + s;
