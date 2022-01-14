@@ -4,9 +4,9 @@ function Student(name, gender, age) {
   this.age = age;
 };
 
-let user1 = new Student("Ivanov", "male", "24");
-let user2 = new Student("Petrova", "female", "32");
-let user3 = new Student("Sidorov", "male", "17");
+let user1 = new Student("Petya", "male", "24");
+let user2 = new Student("Elena", "female", "32");
+let user3 = new Student("Stanislav", "male", "17");
 
 Student.prototype.setSubject = function (subjectName) {
   this.subject = subjectName;
@@ -36,7 +36,6 @@ Student.prototype.getAverage = function () {
   let sum = 0;
   for(let i = 0; i < this.marks.length; i++) {
   sum +=  this.marks[i]; }
-  let average = sum/this.marks.length;
   return sum/this.marks.length;
 };
 
