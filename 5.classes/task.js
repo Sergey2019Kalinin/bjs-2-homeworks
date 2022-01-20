@@ -73,27 +73,37 @@ class Library {
 	constructor(name) {
 		this.name = String(name);
 		this.books = [];
-	}
+	};
+  
 
 	addBook(book) {
+		if (book.state > 30) {
 		this.books.push(book);
-	}
+		} else {
+				return alert(`Неудовлетворительное состояние книги - ${book.state} из 100. В библиотеку добавление не производим`);
+		}
+	};
 
-	findBookBy(key, value) {
-    for(let i=0; i < this.books.length; i++) {
-      if(this.books[i].hasOwnProperty(key)) {
-        if(this.books[i][key] === Number(value)) {
-          return this.books[i];
+	findBookBy (key, value) {
+    let findBook = null;
+    for (let i=0; i < this.books.length; i++) {
+      	for (let k in this.books[i])	{
+        	if (k === key && this.books[i][key] === value) {
+            findBook = this.books[i];
+          }
         }
-      } else return null;
-    }
-  }
+      }
+    return findBook;
+  };
 
   giveBookByName(bookName) {
-  	for(let i = 0; i < this.books.length; i++) {
+    let needBook;
+  	for (let i = 0; i < this.books.length; i++) {
       if(this.books[i].name === bookName) {
-      return this.books.splice(i, 1);
+      needBook = this.books.splice(i, 1)[0];
+      console.log(needBook);
       }
     }
-  }
-};
+  return needBook;
+  };
+}
