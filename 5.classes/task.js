@@ -87,23 +87,22 @@ class Library {
 	findBookBy (key, value) {
     let findBook = null;
     for (let i=0; i < this.books.length; i++) {
-      	for (let k in this.books[i])	{
-        	if (k === key && this.books[i][key] === value) {
-            findBook = this.books[i];
-          }
-        }
-      }
+      for (let k in this.books[i])	{
+        if (k === key && this.books[i][key] === value) {
+          findBook = this.books[i];
+         }
+       }
+    }
     return findBook;
   };
 
   giveBookByName(bookName) {
-    let needBook;
+    let giveBook = null;
   	for (let i = 0; i < this.books.length; i++) {
       if(this.books[i].name === bookName) {
-      needBook = this.books.splice(i, 1)[0];
-      console.log(needBook);
+      giveBook = this.books.splice(i, 1)[0];
       }
     }
-  return needBook;
+  	return giveBook;
   };
 }
