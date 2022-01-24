@@ -2,6 +2,7 @@
 
 const parseCount = (parseArg) => {
 	let parseResult = Number.parseInt (parseArg);
+
 	if (isNaN (parseResult)) {
 		throw new Error ("Невалидное значение");
   }
@@ -9,11 +10,11 @@ const parseCount = (parseArg) => {
 };
 
 const validateCount = (parseArg) => {
-	try { parseCount;
+	try { parseCount (parseArg);
 		return parseCount (parseArg);
 
-	} catch	{
-		return ("Невалидное значение");
+	} catch (parseError)	{
+		return parseError;
 	}
 };
 
@@ -25,50 +26,50 @@ class Triangle {
 		this.sideB = sideB;
 		this.sideC = sideC;
 
-		if ((sideA + sideB) < sideC || (sideA + sideC) < sideB || (sideB + sideC) < sideB)	{
-			const sideSumError = new Error("Треугольник с такими сторонами не существует");
-			throw sideSumError;
+		if ((sideA + sideB) < sideC || (sideA + sideC) < sideB
+			|| (sideB + sideC) < sideB)	{
+
+			throw new Error
+		("Треугольник с такими сторонами не существует");
 		}
 	};
 
-	let perimeter = this.sideA + this.sideB + this.sideC;
+	
 
 	getPerimeter () { 
+		let perimeter = this.sideA + this.sideB + this.sideC;
 		return perimeter;
 	};
 
 	getArea ()	{
-		let p = 0.5 * perimeter;
-		let triangleArea = Math.pow (p * ( p - this.sideA) * ( p - this.sideB) * ( p - this.sideC),	0.5);
+		let p = 0.5 * this.getPerimeter ();
+		let triangleArea = Math.pow
+		(p * ( p - this.sideA) * ( p - this.sideB) * ( p - this.sideC),	0.5);
 
 		return +triangleArea.toFixed(3);
 	}
 };
 
-class noTriangle extends Triangle {
-	constructor (sideA, sideB, sideC) {
-		super (sideA, sideB, sideC);
-	}
-		
-	getPerimeter () { 
-		return ("Ошибка! Треугольник не существует");
-	}
-
-	getArea ()	{
-		return ("Ошибка! Треугольник не существует");
-	}
-};
-
 const getTriangle = (sideA, sideB, sideC) => {
+
 	try	{ customTriangle = new Triangle (sideA, sideB, sideC);
 		return customTriangle;
 
 	}	catch (sideSumError) {
-			if ((sideA + sideB) < sideC || (sideA + sideC) < sideB
-			|| (sideB + sideC) < sideB) {
+			let noTriangleObject =	{
+										sideA,
+										sideB,
+										sideC,
 
-				let noTriangleObject = new noTriangle (sideA, sideB, sideC);
-				return	noTriangleObject;
-  			}
-   		}
+										getPerimeter () { 
+											return ("Ошибка! Треугольник не существует.");
+										},
+
+										getArea ()	{
+											return ("Ошибка! Треугольник не существует.");
+									}
+				};
+
+			return	noTriangleObject;
+  		}
 };
